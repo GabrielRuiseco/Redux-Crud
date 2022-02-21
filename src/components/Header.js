@@ -11,12 +11,12 @@ const Header = () => {
           </Link>
         </h1>
       </div>
-      <a
+      <Link
         className='btn btn-danger nuevo-post d-block d-md-inline-block'
-        href='/productos/nuevo'
+        to='/productos/nuevo'
       >
         Agregar producto &#43;
-      </a>
+      </Link>
     </nav>
   );
 };
