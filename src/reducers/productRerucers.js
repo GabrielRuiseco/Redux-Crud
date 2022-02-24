@@ -1,4 +1,11 @@
-import { ADD_PRODUCT, ADD_PRODUCT_SUCCESS, ADD_PRODUCT_ERROR } from '../types';
+import {
+  ADD_PRODUCT,
+  ADD_PRODUCT_SUCCESS,
+  ADD_PRODUCT_ERROR,
+  GET_PRODUCTS,
+  GET_PRODUCTS_SUCCESS,
+  GET_PRODUCTS_ERROR,
+} from '../types';
 
 const initialState = {
   products: [],
@@ -8,6 +15,7 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    case GET_PRODUCTS:
     case ADD_PRODUCT:
       return {
         ...state,
@@ -19,12 +27,20 @@ export default function (state = initialState, action) {
         loading: false,
         products: [...state.products, action.payload],
       };
-    case ADD_PRODUCT_ERROR: 
+    case GET_PRODUCTS_ERROR:
+    case ADD_PRODUCT_ERROR:
       return {
         ...state,
-        loading : false,
-        error: action.payload
-      }
+        loading: false,
+        error: action.payload,
+      };
+    case GET_PRODUCTS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        products: action.payload,
+      };
     default:
       return state;
   }
