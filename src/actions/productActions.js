@@ -1,3 +1,4 @@
+import axios from 'axios';
 import clientAxios from '../config/axios';
 import {
   ADD_PRODUCT,
@@ -6,6 +7,9 @@ import {
   GET_PRODUCTS,
   GET_PRODUCTS_SUCCESS,
   GET_PRODUCTS_ERROR,
+  DELETE_PRODUCT,
+  DELETE_PRODUCT_SUCCESS,
+  DELETE_PRODUCT_ERROR,
 } from '../types';
 import Swal from 'sweetalert2';
 
@@ -69,4 +73,38 @@ const getProductsSuccess = (products) => ({
 const getProductsError = (error) => ({
   type: GET_PRODUCTS_ERROR,
   payload: error,
+});
+
+export function deleteProductAction(id) {
+  return async (dispatch) => {
+    dispatch(deleteProduct(id));
+    try {
+      const result = await axios({
+        method: 'delete',
+        url: `${process.env.REACT_APP_API_URL}/delete`,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: {
+          id: id,
+        },
+      });
+      dispatch(deleteProductSuccess());
+      console.log(result.data);
+    } catch (error) {}
+  };
+}
+
+const deleteProduct = (id) => ({
+  type: DELETE_PRODUCT,
+  payload: id,
+});
+
+const deleteProductSuccess = () => ({
+  type: DELETE_PRODUCT_SUCCESS,
+});
+
+const deleteProductError = () => ({
+  type: DELETE_PRODUCT_ERROR,
+  payload: true,
 });
